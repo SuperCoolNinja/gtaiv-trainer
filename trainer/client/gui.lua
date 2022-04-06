@@ -14,7 +14,13 @@ Menu = {
         ["bikes"] = 3,
         ["boats"] = 4,
         ["aircraft"] = 5,
-		["credits"] = 6
+        ["weapons"] = 6,
+        ["weathers"] = 7,
+        ["time"] = 8,
+		["option_cars"] = 9,
+		["neons"] = 10,
+        ["self"] = 11,
+		["credits"] = 12
     }
 }
 

@@ -1,19 +1,90 @@
 config = {};
-config.enableControl = true;
+config.enableControl = true; --> Can control gameplay while the menu is open.
 
-config.menu = 
-{
+config.player = {
+    isGodMode = false,
+    getActualCar = nil,
+}
+
+config.vehicle = {
+ 
+}
+
+config.menu = {
     mainSub = {
-        {label = "Spawn cars", id = "spawn_cars"},
-        {label = "Credits",    id = "credits"},
+        {label = "Self options",      id = "self"},
+        {label = "Spawn vehicle",     id = "spawn_cars"},
+        {label = "Vehicle options",   id = "option_cars"},
+        {label = "Weapons",           id = "weapons"},
+        {label = "Weathers",          id = "weathers"},
+        --{label = "Time",            id = "time"},
+        {label = "Credits",           id = "credits"},
+    },
+
+    selfSub = {
+        {label = "Tp to marker"},
     },
 
     spawnCarsSub = {
-        {label = "Cars",     id = "cars"},
-        {label = "Bikes",    id = "bikes"},
-        {label = "Boats",    id = "boats"},
-        {label = "Aircraft", id = "aircraft"},
+        {label = "Cars",              id = "cars"},
+        {label = "Bikes",             id = "bikes"},
+        {label = "Boats",             id = "boats"},
+        {label = "Aircraft",          id = "aircraft"},
     },
+
+    carsOptions = {
+        {label = "GodMode"},
+        {label = "Boost"},
+        {label = "Repair"},
+        {label = "Flip"},
+        {label = "Random Color"},
+    },
+
+    carsOptionsSub = {
+        {label = "Neons", id = "neons"},
+    },
+
+    neonsOptions = {
+        {label = "Red",    color   = 0xCB26803D},
+        {label = "Blue",   color   = 0xD20167BE},
+        {label = "White",  color   = 0xFCB32869},
+        {label = "Orange", color   = 0x2F8AEA79},
+    },
+
+    weaponsOptions = {
+        {label = "Fist",              id = 0},
+        {label = "Bat",               id = 1},
+        {label = "Pool Cue",          id = 2},
+        {label = "Knife",             id = 3},
+        {label = "Grenade",           id = 4},
+        {label = "Molotov",           id = 5},
+        {label = "Pistol",            id = 7},
+        {label = "Combat Pistol",     id = 9},
+        {label = "Pump Shotgun",      id = 10},
+        {label = "Combat Shotgun",    id = 11},
+        {label = "Micro-SMG",         id = 12},
+        {label = "SMG",               id = 13},
+        {label = "Assault Rifle",     id = 14},
+        {label = "Carbine Rifle",     id = 15},
+        {label = "Combat Sniper",     id = 16},
+        {label = "Sniper Rifle",      id = 17},
+        {label = "RPG",               id = 18},
+    },
+
+
+    weathersOptions = {
+        {label = "Extra Sunny",        id = 0},
+        {label = "Sunny",              id = 1},
+        {label = "Sunny and Windy",    id = 2},
+        {label = "Cloudy",             id = 3},
+        {label = "Raining",            id = 4},
+        {label = "Drizzle",            id = 5},
+        {label = "Foggy",              id = 6},
+        {label = "Thunderstorm",       id = 7},
+        {label = "Extra Sunny 2",      id = 8},
+        {label = "Sunny and Windy 2",  id = 9},
+    },
+
 
     creditsOptions = {
         {label = "K3rhos Base menu"},
