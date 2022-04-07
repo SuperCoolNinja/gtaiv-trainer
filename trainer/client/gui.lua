@@ -20,7 +20,8 @@ Menu = {
 		["option_cars"] = 9,
 		["neons"] = 10,
         ["self"] = 11,
-		["credits"] = 12
+        ["change_character"] = 12,
+		["credits"] = 20
     }
 }
 

@@ -1,8 +1,10 @@
+local optiTimerCar = 1000;
+local optiTimerPlayer = 1000;
+
 Citizen.CreateThread(function()
     while true do
-        Citizen.Wait(1)
+        Citizen.Wait(0)
 
-        local player = GetPlayerChar(-1);
         config.player.getActualCar = GetCarCharIsUsing(GetPlayerChar(-1));
 
         -- Open / close the menu :
@@ -23,11 +25,48 @@ Citizen.CreateThread(function()
             MainMenu()
             CarsMenu()
         end
+    end
+end)
 
-        if (IsCharInAnyCar(player)) then
-            SetCharInvincible(config.player.getActualCar, config.player.isGodMode)
+--> Loop for cars option : 
+Citizen.CreateThread(function()
+    while true do
+        optiTimerCar = 1000;
+
+        if (IsCharInAnyCar(GetPlayerChar(-1))) then
+            optiTimerCar = 0;
+
+            if (config.vehicle.isGodMode) then
+                SetCarCanBeVisiblyDamaged(config.player.getActualCar, false)
+                SetCarCanBeDamaged(config.player.getActualCar, false)
+            end
+        
+            if (config.vehicle.isBoostOn) then  --> If boost mode is enanled then we allow action to make a boost using car.
+                if IsGameKeyboardKeyJustPressed(18) then --> E / ?
+                    boostCar(GetCarCharIsUsing(GetPlayerChar(-1)));
+                end
+            end
+        end
+        Citizen.Wait(optiTimerCar)
+    end
+end)
+
+--> Loop to make the player in godMode : 
+Citizen.CreateThread(function()
+    while true do
+        optiTimerPlayer = 1000;
+
+        if ((config.player.isGodMode) or (config.player.isNeverWantedOn)) then 
+            optiTimerPlayer = 0;
         end
 
-        SetCharInvincible(player, config.player.isGodMode)
+        SetCharInvincible(GetPlayerChar(-1), config.player.isGodMode)
+
+        if (config.player.isNeverWantedOn) then
+            AlterWantedLevel(GetPlayerId(), 0);
+            AlterWantedLevelNoDrop(GetPlayerId(), 0);
+        end
+        
+        Citizen.Wait(optiTimerPlayer)
     end
 end)

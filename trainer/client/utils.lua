@@ -1,6 +1,5 @@
 Utils = {}
 
-
 RegisterNetEvent('cl_changeWeathers')
 AddEventHandler('cl_changeWeathers', function(weatherid)
     ForceWeatherNow(tonumber(weatherid))
@@ -11,7 +10,6 @@ RegisterNetEvent('cl_setTime')
 AddEventHandler('cl_setTime', function(hour)
 	SetTimeOfDay(tonumber(hour))
 end)
-
 
 
 function Utils.Round(_num, _numDecimalPlaces)
@@ -86,11 +84,50 @@ function spawnNeon(model)
 end
 
 function giveWeapon(model)
-	GiveWeaponToChar(GetPlayerChar(-1), model, 999)
+	GiveWeaponToChar(GetPlayerChar(-1), model, 999);
 end
 
+function repairCar(vehicle) 
+    FixCar(vehicle)
+end
 
-function TeleportToWaypoint()
+local function network_control(netID)
+	local i = 0;
+    repeat
+        i = i + 1;
+        RequestControlOfNetworkId(netID);
+        if(HasControlOfNetworkId(netID)) then 
+            return true;
+        else 
+            Wait(0);
+        end
+    until (i < 50);
+    return false;
+end
+function flipCar(vehicle)
+    local vehId = GetNetworkIdFromVehicle(vehicle);
+    if (network_control(vehId)) then
+        local carHeading = GetCarHeading(vehicle);
+        local getActualSpeed = GetCarSpeed(vehicle);
+        SetVehicleQuaternion(vehicle, 0,0,0,0);
+        SetCarHeading(vehicle, carHeading);
+        SetCarForwardSpeed(vehicle, getActualSpeed); --?
+    end
+end
+
+function boostCar(vehicle) 
+    local getActualSpeed = GetCarSpeed(vehicle);
+    SetCarForwardSpeed(vehicle, getActualSpeed * 2.50);
+end
+
+function changeModel(model)
+    RequestModel(model);
+    while (not HasModelLoaded(model)) do Wait(0) end
+    ChangePlayerModel(GetPlayerId(), model);
+    MarkModelAsNoLongerNeeded(model);
+end
+
+function teleportToWaypoint()
     local blip = GetFirstBlipInfoId(8);
 
     if (DoesBlipExist(blip)) then

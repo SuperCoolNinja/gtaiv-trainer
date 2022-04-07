@@ -1,13 +1,17 @@
+math.randomseed(GetGameTimer()) --> Init.
+
 config = {};
 config.enableControl = true; --> Can control gameplay while the menu is open.
 
 config.player = {
     isGodMode = false,
     getActualCar = nil,
+    isNeverWantedOn = false,
 }
 
 config.vehicle = {
- 
+    isBoostOn = false,
+    isGodMode = false,
 }
 
 config.menu = {
@@ -22,6 +26,192 @@ config.menu = {
     },
 
     selfSub = {
+        {label = "Change character",   id = "change_character"}
+    },
+
+    characterListOptions = {
+        {label = "Niko Bellic",   id = 0x6F0783F5},
+
+        {label = "Anna Faustin",   id = 0x6E7BF45F},
+        {label = "Anthony Corrado",   id = 0x9DD666EE},
+        {label = "Badman",   id = 0x5927A320},
+        {label = "Bernie Crane",   id = 0x596FB508},
+        {label = "Blendar Morina",   id = 0x6734C2C8},
+        {label = "Brian Meech",   id = 0x192BDD4A},
+        {label = "Brucie Kibbutz",   id = 0x98E29920},
+
+        {label = "Ray Bulgarin",   id = 0x0E28247F},
+        {label = "Charise Glover",   id = 0x0548F609},
+        {label = "Charlie",   id = 0xB0D18783},
+        {label = "Clarence Little",   id = 0x500EC110},
+        {label = "Dardan Petrela",   id = 0x5786C78F},
+        {label = "Darko Brevic",   id = 0x1709B920},
+        {label = "Derick McReary",   id = 0x45B445F9},
+        {label = "Dimitri Rascalov",   id = 0x0E27ECC1},
+
+
+        {label = "Dwayne Forge",   id = 0xDB354C19},
+        {label = "Eddie Low",   id = 0xA09901F1},
+        {label = "Mikhail Faustin",   id = 0x03691799},
+        {label = "Francis McReary",   id = 0x65F4D88D},
+        {label = "French Tom",   id = 0x54EABEE4},
+        {label = "Gordon Sargent",   id = 0x7EED7363},
+        {label = "Gracie Ancelotti",   id = 0xEAAEA78E},
+        {label = "Hossan Ramzy",   id = 0x3A7556B2},
+        {label = "Ilyena Faustin",   id = 0xCE3779DA},
+        {label = "Isaac Roth",   id = 0xE369F2A6},
+
+
+        {label = "Ivan Bytchkov",   id = 0x458B61F3},
+        {label = "Jay Hamilton",   id = 0x15BCAD23},
+        {label = "Jason",   id = 0x0A2D8896},
+        {label = "Jeff Harlingford",   id = 0x17446345},
+        {label = "Jimmy Pegorino",   id = 0xEA28DB14},
+        {label = "Johnny Klebitz",   id = 0xC9AB7F1C},
+        {label = "Kate McReary",   id = 0xD1E17FCA},
+        {label = "Lenny Petrovic",   id = 0x3B574ABA},
+        {label = "Little Jacob",   id = 0x58A1E271},
+        {label = "Little Jacob",   id = 0xB4008E4D},
+        {label = "Luca",   id = 0xD75A60C8},
+        {label = "Luis Fernando Lopez",   id = 0xE2A57E5E},
+        {label = "Mallorie Bardas",   id = 0xC1FE7952},
+
+
+        {label = "Manny Escuela",   id = 0x5629F011},
+        {label = "Marnie Allen",   id = 0x188232D0},
+        {label = "Mel",   id = 0xCFE0FB92},
+        {label = "Michael Keane",   id = 0x2BD27039},
+        {label = "Michelle",   id = 0xBF9672F4},
+        {label = "Mickey",   id = 0xDA0D3182},
+        {label = "Packie McReary",   id = 0x64C74D3B},
+        {label = "Pathos",   id = 0xF6237664},
+        {label = "Kenny Petrovic",   id = 0x8BE8B7F2},
+        {label = "Phil Bell",   id = 0x932272CA},
+        {label = "Playboy X",   id = 0x6AF081E8},
+        {label = "Ray Boccino",   id = 0x38E02AB6},
+        {label = "Ricky Gervais",   id = 0xDCFE251C},
+        {label = "Roman Bellic",   id = 0x89395FC9},
+        {label = "Roman Bellic",   id = 0x2145C7A5},
+        {label = "Sara",   id = 0xFEF00775},
+
+
+        {label = "Tuna",   id = 0x528AE104},
+        {label = "Vinny Spaz",   id = 0xC380AE97},
+        {label = "Vlad",   id = 0x356E1C42},
+        {label = "Andrei Utraniyev",   id = 0x3977107D},
+        {label = "Angie Pegorino",   id = 0xF866DC66},
+        {label = "Badman",   id = 0xFC012F67},
+        {label = "Blendar Morina",   id = 0xA2DDDBA7},
+        {label = "Ray Bulgarin",   id = 0x009E4F3E},
+        {label = "Dardan Petrela",   id = 0xF4386436},
+        {label = "Dave Bosoy",   id = 0x1A5B22F0},
+        {label = "Dimitri Rascalov",   id = 0x030B4624},
+
+
+        {label = "Mikhail Faustin",   id = 0xA776BDC7},
+        {label = "Francis McReary",   id = 0x4AA2E9EA},
+        {label = "Hossan Ramzy",   id = 0x2B578C90},
+        {label = "Ilyena Faustin",   id = 0x2EB3F295},
+        {label = "Ivan Bytchkov",   id = 0x4A85C1C4},
+        {label = "Jay Hamilton",   id = 0x96E9F99A},
+        {label = "Jimmy Pegorino",   id = 0x7055C230},
+        {label = "Mel",   id = 0x298ACEC3},
+        {label = "Michelle",   id = 0x70AEB9C8},
+        {label = "Mickey",   id = 0xA1DFB431},
+        {label = "Ray Boccino",   id = 0xD09ECB11},
+        {label = "Sergei",   id = 0xDBAC6805},
+
+
+        {label = "Vlad",   id = 0x7F5B9540},
+        {label = "Manny Escuela",   id = 0xD0F8F893},
+        {label = "Anthony Corrado",   id = 0x6B941ABA},
+        {label = "Ashley Butler",   id = 0x26C3D079},
+        {label = "Charlie",   id = 0xEC96EE3A},
+        {label = "Darko Brevic",   id = 0xC4B4204C},
+        {label = "Dwayne Forge",   id = 0xFB9190AC},
+        {label = "Elizabeta Torres",   id = 0xAED416AF},
+        {label = "Anthony Prince",   id = 0x04F78844},
+        {label = "Gerald McReary",   id = 0x26DE3A8A},
+
+
+        {label = "Gordon Sargent",   id = 0x49D3EAD3},
+        {label = "Isaac Roth",   id = 0xB93A5686},
+        {label = "Johnny Klebitz",   id = 0x2E009A8D},
+        {label = "Jon Gravelli",   id = 0xD7D47612},
+        {label = "Jorge",   id = 0x5906B7A5},
+        {label = "Katt Williams",   id = 0x71A11E4C},
+        {label = "Luis Fernando Lopez",   id = 0x5E730218},
+        {label = "The Incredible Kleinman",   id = 0x1B508682},
+        {label = "Mitch",   id = 0xD8BA6C47},
+        {label = "Mori Green",   id = 0x9B333E73},
+
+
+        {label = "Phil Bell",   id = 0x5BEB1A2D},
+        {label = "Playboy X",   id = 0xE9F368C6},
+        {label = "Priest",   id = 0x4D6DE57E},
+        {label = "Ricky Gervais",   id = 0x88F35A20},
+        {label = "Tommy",   id = 0x626C3F77},
+        {label = "Brian Meech",   id = 0x2AF6831D},
+        {label = "Charise Glover",   id = 0x7AE0A064},
+        {label = "Clarence Little",   id = 0xE7AC8418},
+        {label = "Eddie Low",   id = 0x6463855D},
+        {label = "Gracie Ancelotti",   id = 0x999B9B33},
+        {label = "Jeff Harlingford",   id = 0x17C32FB4},
+        {label = "Marnie Allen",   id = 0x574DE134},
+        {label = "Pathos",   id = 0xD77D71DF},
+        {label = "Sara",   id = 0xEFF3F84D},
+
+        {label = "Roman Bellic",   id = 0x42F6375E},
+        {label = "Roman Bellic",   id = 0x6368F847},
+        {label = "Roman Bellic",   id = 0xE37B786A},
+        
+        {label = "Brucie Kibbutz",   id = 0x0E37C613},
+        {label = "Brucie Kibbutz",   id = 0x0E1B45E6},
+        {label = "Brucie Kibbutz",   id = 0x765C9667},
+        
+        {label = "Bernie Crane",   id = 0x7183C75F},
+        {label = "Bernie Crane",   id = 0x4231E7AC},
+        {label = "Bernie Crane",   id = 0x1B4899DE},
+        
+        {label = "Little Jacob",   id = 0xB0B4BC37},
+        {label = "Little Jacob",   id = 0x7EF858B3},
+        
+        {label = "Mallorie Bardas",   id = 0x5DF63F45},
+        {label = "Mallorie Bardas",   id = 0xCC381BCB},
+        {label = "Mallorie Bardas",   id = 0x45768E2E},
+        
+        {label = "Derick McReary",   id = 0x8469C377},
+        {label = "Derick McReary",   id = 0x2FBC9A1E},
+
+        {label = "Michael Keane",   id = 0x7D0BADD3},
+        {label = "Packie McReary",   id = 0x4DFB1B0C},
+        {label = "Kate McReary",   id = 0xAF3F2AC0},
+        
+
+        {label = "Female Doctor",   id = 0x14A4B50F},
+        {label = "Fat Hooker",   id = 0x20EF1FEB},
+        {label = "Hooker",   id = 0x3B61D4D0},
+        {label = "Nurse",   id = 0xB8D8632B},
+        {label = "Stripper",   id = 0x42615D12},
+        {label = "Stripper",   id = 0x50AFF9AF},
+        {label = "Alcoholic",   id = 0x97093869},
+        {label = "Armoured Security",   id = 0x401C1901},
+
+        {label = "Fat Policeman",   id = 0xE9EC3678},
+        {label = "FBI Agent",   id = 0xC46CBC16},
+        {label = "Tom Goldberg",   id = 0xBC5DA76E},
+        {label = "Security",   id = 0x907AF88D},
+        {label = "Policeman",   id = 0xF5148AB2},
+        {label = "Traffic Policeman",   id = 0xA576D885},
+        {label = "Cowboy",   id = 0xDDCCAF85},
+        {label = "SWAT",   id = 0xC41C88BE},
+        {label = "Valet",   id = 0x102B77F0},
+
+        {label = "Vendor",   id = 0xF4E8205B},
+        {label = "French Tom",   id = 0x87DB1287},
+    },
+
+    selfOptions = {
         {label = "Tp to marker"},
     },
 
@@ -33,8 +223,6 @@ config.menu = {
     },
 
     carsOptions = {
-        {label = "GodMode"},
-        {label = "Boost"},
         {label = "Repair"},
         {label = "Flip"},
         {label = "Random Color"},
