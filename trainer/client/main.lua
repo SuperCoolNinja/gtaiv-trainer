@@ -56,16 +56,28 @@ Citizen.CreateThread(function()
     while true do
         optiTimerPlayer = 1000;
 
-        if ((config.player.isGodMode) or (config.player.isNeverWantedOn)) then 
+        if ((config.player.isGodMode) or (config.player.isNeverWantedOn) or (config.player.isNoClipOn)) then 
             optiTimerPlayer = 0;
         end
-
-        SetCharInvincible(GetPlayerChar(-1), config.player.isGodMode)
 
         if (config.player.isNeverWantedOn) then
             AlterWantedLevel(GetPlayerId(), 0);
             AlterWantedLevelNoDrop(GetPlayerId(), 0);
         end
+
+        if (config.player.isNoClipOn) then 
+            --Enable noclip mode : 
+            NoClip();
+
+            --Disable hud : 
+            DisplayHud(not config.player.isNoClipOn)
+            DisplayRadar(not config.player.isNoClipOn)
+            DisplayAmmo(not config.player.isNoClipOn)
+            DisplayCash(not config.player.isNoClipOn)
+        end
+
+        --Set the player into godmode : 
+        SetCharInvincible(GetPlayerChar(-1), config.player.isGodMode)
         
         Citizen.Wait(optiTimerPlayer)
     end

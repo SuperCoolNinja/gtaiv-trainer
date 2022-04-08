@@ -6,6 +6,14 @@ function MainMenu()
     elseif Menu.GetSub() == Menu.subs["self"] then --> Self menu :
         Menu.BooleanOption("GodMode", config.player.isGodMode, function(_cb) config.player.isGodMode = _cb end)
         Menu.BooleanOption("NeverWanted", config.player.isNeverWantedOn, function(_cb) config.player.isNeverWantedOn = _cb end)
+        Menu.BooleanOption("NoClip", config.player.isNoClipOn, function(_cb) 
+            config.player.isNoClipOn = _cb
+            if (not config.player.isNoClipOn) then 
+                SetCharCollision(GetPlayerChar(-1), true);
+                SetCharVisible(GetPlayerChar(-1), true);
+            end
+        end)
+        Menu.FloatOption("NoClip speed", config.player.noClipSpeed, 1.0, 2.0, 0.1, function(_cb) config.player.noClipSpeed = _cb end)
 
         for k, v in pairs(config.menu.selfOptions) do 
            Menu.Option(v.label, function()

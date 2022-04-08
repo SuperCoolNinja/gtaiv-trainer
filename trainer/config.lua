@@ -1,5 +1,3 @@
-math.randomseed(GetGameTimer()) --> Init.
-
 config = {};
 config.enableControl = true; --> Can control gameplay while the menu is open.
 
@@ -7,6 +5,8 @@ config.player = {
     isGodMode = false,
     getActualCar = nil,
     isNeverWantedOn = false,
+    isNoClipOn = false,
+    noClipSpeed = 1.0
 }
 
 config.vehicle = {
@@ -14,8 +14,8 @@ config.vehicle = {
     isGodMode = false,
 }
 
-config.menu = {
-    mainSub = {
+config.menu = { 
+    mainSub = { --> main menu :
         {label = "Self options",      id = "self"},
         {label = "Spawn vehicle",     id = "spawn_cars"},
         {label = "Vehicle options",   id = "option_cars"},
@@ -25,11 +25,15 @@ config.menu = {
         {label = "Credits",           id = "credits"},
     },
 
-    selfSub = {
+    selfSub = { --> self submenu :
         {label = "Change character",   id = "change_character"}
     },
 
-    characterListOptions = {
+    selfOptions = { --> self options :
+        {label = "Tp to marker"},
+    },
+
+    characterListOptions = { --> self change character options :
         {label = "Niko Bellic",   id = 0x6F0783F5},
 
         {label = "Anna Faustin",   id = 0x6E7BF45F},
@@ -211,35 +215,31 @@ config.menu = {
         {label = "French Tom",   id = 0x87DB1287},
     },
 
-    selfOptions = {
-        {label = "Tp to marker"},
-    },
-
-    spawnCarsSub = {
+    spawnCarsSub = { --> cars submenu :
         {label = "Cars",              id = "cars"},
         {label = "Bikes",             id = "bikes"},
         {label = "Boats",             id = "boats"},
         {label = "Aircraft",          id = "aircraft"},
     },
 
-    carsOptions = {
+    carsOptions = {  --> cars options :
         {label = "Repair"},
         {label = "Flip"},
         {label = "Random Color"},
     },
 
-    carsOptionsSub = {
+    carsOptionsSub = { --> cars options submenu :
         {label = "Neons", id = "neons"},
     },
 
-    neonsOptions = {
+    neonsOptions = { --> neons options :
         {label = "Red",    color   = 0xCB26803D},
         {label = "Blue",   color   = 0xD20167BE},
         {label = "White",  color   = 0xFCB32869},
         {label = "Orange", color   = 0x2F8AEA79},
     },
 
-    weaponsOptions = {
+    weaponsOptions = { --> weapons options :
         {label = "Fist",              id = 0},
         {label = "Bat",               id = 1},
         {label = "Pool Cue",          id = 2},
@@ -260,7 +260,7 @@ config.menu = {
     },
 
 
-    weathersOptions = {
+    weathersOptions = {  --> weathers options :
         {label = "Extra Sunny",        id = 0},
         {label = "Sunny",              id = 1},
         {label = "Sunny and Windy",    id = 2},
@@ -274,7 +274,7 @@ config.menu = {
     },
 
 
-    creditsOptions = {
+    creditsOptions = { --> credits options :
         {label = "K3rhos Base menu"},
         {label = "SuperCoolNinja Features"},
         {label = "CitizenIV Docs"},

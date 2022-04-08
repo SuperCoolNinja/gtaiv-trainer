@@ -1,5 +1,8 @@
 Utils = {}
 
+math.randomseed(GetGameTimer()) --> Init.
+
+
 RegisterNetEvent('cl_changeWeathers')
 AddEventHandler('cl_changeWeathers', function(weatherid)
     ForceWeatherNow(tonumber(weatherid))
@@ -15,6 +18,47 @@ end)
 function Utils.Round(_num, _numDecimalPlaces)
 	local mult = 10 ^ (_numDecimalPlaces or 0)
 	return math.floor(_num * mult + 0.5) / mult
+end
+
+function Utils.DegreesToRadians(_degrees)
+    return _degrees * 3.14159265359 / 180.0
+end
+
+
+function NoClip()
+    local localPlayerPed = GetPlayerChar(GetPlayerId());
+    local localPlayerVehicle = GetCarCharIsUsing(localPlayerPed);
+    local x, y, z = GetCharCoordinates(localPlayerPed);
+    local leftStickUpDown = GetControlValue(0, 14);
+    local camera = GetGameCam();
+    local _, _, yaw = GetCamRot(camera);
+
+    if IsButtonPressed(0, 7) or IsGameKeyboardKeyPressed(57) then --> Up Controller
+        z = z + config.player.noClipSpeed /2
+    elseif IsButtonPressed(0, 5) or IsGameKeyboardKeyPressed(42) then --> Down Controller
+        z = z - config.player.noClipSpeed /2
+    end
+
+    if IsGameKeyboardKeyPressed(17) or leftStickUpDown <= 55 then --> Forward
+        local heading = GetCharHeading(localPlayerPed);
+        x = x + config.player.noClipSpeed * math.sin(Utils.DegreesToRadians(heading)) * -1.0
+        y = y + config.player.noClipSpeed * math.cos(Utils.DegreesToRadians(heading))
+    elseif IsGameKeyboardKeyPressed(31) or leftStickUpDown >= 200 then --> Backward
+        local heading = GetCharHeading(localPlayerPed);
+        x = x - config.player.noClipSpeed * math.sin(Utils.DegreesToRadians(heading)) * -1.0
+        y = y - config.player.noClipSpeed * math.cos(Utils.DegreesToRadians(heading))
+    end
+
+    if localPlayerVehicle == 0 then
+        SetCharHeading(localPlayerPed, yaw);
+        SetCharCoordinatesNoOffset(localPlayerPed, x, y, z);
+        SetCharCollision(localPlayerPed, not config.player.noClipSpeed);
+        SetCharVisible(localPlayerPed, false);
+    else
+        SetCarHeading(localPlayerVehicle, yaw);
+        SetCarCoordinatesNoOffset(localPlayerVehicle, x, y, z);
+        SetCarCollision(localPlayerVehicle, not config.player.noClipSpeed);
+    end
 end
 
 function spawnCar(model)
@@ -43,6 +87,7 @@ local function spawnLight(modelNeon, x,y,z,rx,ry,rz)
     SetObjectLights(modelNeon, modelNeon);
     SetObjectVisible(modelNeon, true);
     SetObjectInvincible(modelNeon, true);
+    MarkObjectAsNoLongerNeeded(modelNeon);
 end
 
 function spawnNeon(model)
@@ -65,10 +110,10 @@ function spawnNeon(model)
             spawnLight(neonThree,0.0,0.2,-1.1,-2.0,-190,-190,0);
             spawnLight(neonFour,0.0,0.2,-2.0,-2.0,-190,-190,0);
         elseif(model == 0xD20167BE) then-- blue 
-            spawnLight(neonOne, 0.0,0.2,-1.0,-2.0,-190,-190,0);
-            spawnLight(neonTwo, 0.0,0.2,-1.0,-2.0,-190,-190,0);
-            spawnLight(neonThree,0.0,0.2,-1.1,-2.0,-190,-190,0);
-            spawnLight(neonFour,0.0,0.2,-2.0,-2.0,-190,-190,0);
+            spawnLight(neonOne, 0.0,0.2,0.0,-2.0,180,180,180);
+            spawnLight(neonTwo, 0.0,0.2,0.0,-2.0,180,180,180);
+            spawnLight(neonThree,0.0,0.2,0.0,-2.0,180,180,180);
+            spawnLight(neonFour,0.0,0.2,0.0,-2.0,180,180,180);
         elseif(model == 0xFCB32869) then-- White 
             spawnLight(neonOne, 0.0,0.2,-1.0,-2.0,-190,-190,0);
             spawnLight(neonTwo, 0.0,0.2,-1.0,-2.0,-190,-190,0);
@@ -80,6 +125,8 @@ function spawnNeon(model)
             spawnLight(neonThree,0.0,0.2,-1.1,-2.0,-190,-190,0);
             spawnLight(neonFour,0.0,0.2,-2.0,-2.0,-190,-190,0);
         end
+
+        MarkModelAsNoLongerNeeded(model);
     end)
 end
 
