@@ -8,6 +8,7 @@ function MainMenu()
             Menu.SubmenuOption(v.name, Menu.subs["playerListOptions"], function() 
                 config.serverID = v.serverID
                 config.userName = v.name
+                config.targetIndex = v.targetIndex
                 Wait(250); --> Wait added for small config to let time for data to update with new one. 
             end)
         end
@@ -15,6 +16,7 @@ function MainMenu()
         for k, v in pairs(config.menu.playerListOptions) do 
             Menu.Option(v.label, function()
                 if (k == 1) then 
+                    teleportToPlayer(config.targetIndex);
                     Citizen.Trace("TP TO : " ..config.userName .. " with server ID ! " ..config.serverID);
                 end
             end)

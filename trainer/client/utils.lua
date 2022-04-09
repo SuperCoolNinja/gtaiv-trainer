@@ -15,6 +15,14 @@ AddEventHandler('cl_setTime', function(hour)
 end)
 
 
+function ShowText(text, timeout) --> FROM @LION THANKS G.
+	if(timeout == nil) then
+		PrintStringWithLiteralStringNow("STRING", text, 2000, 1)
+	else
+		PrintStringWithLiteralStringNow("STRING", text, timeout, 1)
+	end
+end
+
 function Utils.Round(_num, _numDecimalPlaces)
 	local mult = 10 ^ (_numDecimalPlaces or 0)
 	return math.floor(_num * mult + 0.5) / mult
@@ -202,4 +210,32 @@ function teleportToWaypoint()
     else
         Citizen.Trace("Waypoint not found!\n")
     end
+end
+
+
+-- FROM @LION THANKS G :
+local function TeleportToChar(charTarget, targetID)
+    local pos = table.pack(GetCharCoordinates(charTarget))
+    table.insert(pos, GetCharHeading(charTarget))
+
+    if(IsCharInAnyCar(config.localPlayer)) then
+        WarpCharFromCarToCoord(config.localPlayer, pos[1], pos[2], pos[3])
+    end
+
+    SetCharCoordinatesNoOffset(config.localPlayer, pos[1], pos[2], pos[3])
+    SetCharHeading(config.localPlayer, pos[4])
+    ShowText("~g~You've successfully teleported to ~b~" .. GetPlayerName(targetID) .. "~w~.")
+end
+
+function teleportToPlayer(target)
+    if(IsCharInAnyCar(GetPlayerChar(target))) then
+        if(GetMaximumNumberOfPassengers(GetCarCharIsUsing(GetPlayerChar(target))) == GetNumberOfPassengers(GetCarCharIsUsing(GetPlayerChar(target)))) then
+            ShowText("~r~There's no more free seats in " .. GetPlayerName(target) .. "'s vehicle! ~g~Warping to the vehicle.")
+            return TeleportToChar(GetPlayerChar(target))
+        end
+
+        WarpCharIntoCarAsPassenger(config.localPlayer, GetCarCharIsUsing(GetPlayerChar(target)))
+        return ShowText("~g~You've successfully teleported into ~y~" .. GetPlayerName(target) .. "~g~'s vehicle.")
+    end
+    TeleportToChar(GetPlayerChar(target), target)
 end

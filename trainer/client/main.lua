@@ -20,7 +20,7 @@ Citizen.CreateThread(function()
                 end
 
                 for _, i in ipairs(users) do --> Add users information into the new object key value.
-                    table.insert(config.playersList, {name = GetPlayerName(i), serverID = GetPlayerServerId(i)})
+                    table.insert(config.playersList, {name = GetPlayerName(i), serverID = GetPlayerServerId(i), targetIndex = i})
                 end
 
                 PlaySoundFrontend(-1, "FRONTEND_MENU_TOGGLE_ON");

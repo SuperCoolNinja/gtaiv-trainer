@@ -19,6 +19,7 @@ config.vehicle = {
 config.playersList = {} --> This will contain the online users.
 config.serverID = -1
 config.userName = ""
+config.targetIndex = nil
 
 
 config.menu = { 
