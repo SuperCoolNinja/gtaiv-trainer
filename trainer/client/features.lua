@@ -29,8 +29,11 @@ function MainMenu()
             config.player.isNoClipOn = _cb
             if (not config.player.isNoClipOn) then 
                 SetCharCollision(config.localPlayer, true);
-                SetCarCollision(config.player.getActualCar, not config.player.noClipSpeed);
                 SetCharVisible(config.localPlayer, true);
+
+                if(IsCharInAnyCar(config.localPlayer)) then
+                    SetCarCollision(config.player.getActualCar, true);
+                end
             end
         end)
 
