@@ -5,8 +5,8 @@ only for CitizenIV.
 
 
 ## How to open the menu ? 
-Controller : Back button
-Keyboard   : (?) for azerty (M) for qwerty.
+- Controller : Back button
+- Keyboard   : (?) for azerty (M) for qwerty.
 
 ## Is this complete ?
 Well from now it is not, I don't have much time to keep the work on, I will try to add more features when I got more time and motivation.
