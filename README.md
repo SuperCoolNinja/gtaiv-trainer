@@ -14,7 +14,7 @@ else do not hesitate to contribute. feel free to use it as your need just make s
 
 
 ## Installation : 
-- drag and drop the trainer folder into your ressource folder.
+- drag and drop the trainer folder into your resources folder.
 - add -trainer into your citmp-server.yml
 - enjoy.
 
