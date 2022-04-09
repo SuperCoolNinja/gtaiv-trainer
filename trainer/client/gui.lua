@@ -21,6 +21,8 @@ Menu = {
 		["neons"] = 10,
         ["self"] = 11,
         ["change_character"] = 12,
+		["playerlist"] = 13,
+		["playerListOptions"] = 14,
 		["credits"] = 20
     }
 }
@@ -125,13 +127,9 @@ function GUI.Text(_text, _x, _y, _scale, _fontId, _align, _color, _shadow)
     end
 end
 
-
-
 function Menu.GetSub()
-    return currentMenu
+	return currentMenu
 end
-
-
 
 function Menu.Update()
 	-- Disable all game inputs.

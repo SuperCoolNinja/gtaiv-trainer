@@ -3,6 +3,22 @@ function MainMenu()
         for _, v in pairs(config.menu.mainSub) do 
             Menu.SubmenuOption(v.label, Menu.subs[v.id], function() end)
         end
+    elseif Menu.GetSub() == Menu.subs["playerlist"] then --> playerlist menu :
+        for _,v in pairs(config.playersList) do 
+            Menu.SubmenuOption(v.name, Menu.subs["playerListOptions"], function() 
+                config.serverID = v.serverID
+                config.userName = v.name
+                Wait(250); --> Wait added for small config to let time for data to update with new one. 
+            end)
+        end
+    elseif Menu.GetSub() == Menu.subs["playerListOptions"] then --> playerlist options menu :
+        for k, v in pairs(config.menu.playerListOptions) do 
+            Menu.Option(v.label, function()
+                if (k == 1) then 
+                    Citizen.Trace("TP TO : " ..config.userName .. " with server ID ! " ..config.serverID);
+                end
+            end)
+        end
     elseif Menu.GetSub() == Menu.subs["self"] then --> Self menu :
         Menu.BooleanOption("GodMode", config.player.isGodMode, function(_cb) config.player.isGodMode = _cb end)
         Menu.BooleanOption("NeverWanted", config.player.isNeverWantedOn, function(_cb) config.player.isNeverWantedOn = _cb end)

@@ -24,6 +24,17 @@ function Utils.DegreesToRadians(_degrees)
     return _degrees * 3.14159265359 / 180.0
 end
 
+function showHUD(bool)
+    DisplayHud(bool);
+    DisplayRadar(bool);
+    DisplayAmmo(bool);
+    DisplayCash(bool);
+end
+
+function disableCops()
+    AlterWantedLevel(GetPlayerId(), 0);
+    AlterWantedLevelNoDrop(GetPlayerId(), 0);
+end
 
 function NoClip()
     local x, y, z = GetCharCoordinates(config.localPlayer);
@@ -61,22 +72,22 @@ end
 
 function spawnCar(model)
     Citizen.CreateThread(function()
-		local pos = table.pack(GetCharCoordinates(config.localPlayer))
+		local pos = table.pack(GetCharCoordinates(config.localPlayer));
 
-		RequestModel(model)
+		RequestModel(model);
 
         while not HasModelLoaded(model) do 
-            Citizen.Wait(0) 
+            Citizen.Wait(0)
         end
 
-        local car = CreateCar(model, pos[1], pos[2], pos[3], true)
-        SetCarHeading(car, pos[4])
-        SetCarOnGroundProperly(car)
-        SetVehicleDirtLevel(car, 0.0)
-        WashVehicleTextures(car, 255)
-		WarpCharIntoCar(config.localPlayer, car)
-        MarkModelAsNoLongerNeeded(model)
-        MarkCarAsNoLongerNeeded(car)
+        local car = CreateCar(model, pos[1], pos[2], pos[3], true);
+        SetCarHeading(car, pos[4]);
+        SetCarOnGroundProperly(car);
+        SetVehicleDirtLevel(car, 0.0);
+        WashVehicleTextures(car, 255);
+		WarpCharIntoCar(config.localPlayer, car);
+        MarkModelAsNoLongerNeeded(model);
+        MarkCarAsNoLongerNeeded(car);
     end)
 end
 
@@ -92,16 +103,12 @@ end
 function spawnNeon(model)
     CreateThread(function()
         RequestModel(model);
-        while (not HasModelLoaded(model)) do
-            Wait(0)
-        end
-
-        local light     = nil;
-        local neonOne   = CreateObject(model, 0.0, 0.0, 0.0, light, true);
-        local neonTwo   = CreateObject(model, 0.0, 0.0, 0.0, light, true);
-        local neonThree = CreateObject(model, 0.0, 0.0, 0.0, light, true);
-        local neonFour  = CreateObject(model, 0.0, 0.0, 0.0, light, true);
-
+        while (not HasModelLoaded(model)) do Wait(0) end
+ 
+        local neonOne   = CreateObject(model, 0.0, 0.0, 0.0, _, true);
+        local neonTwo   = CreateObject(model, 0.0, 0.0, 0.0, _, true);
+        local neonThree = CreateObject(model, 0.0, 0.0, 0.0, _, true);
+        local neonFour  = CreateObject(model, 0.0, 0.0, 0.0, _, true);
 
         if(model == 0xCB26803D) then -- red 
             spawnLight(neonOne, 0.0,0.2,-1.0,-2.0,-190,-190,0);
@@ -134,7 +141,7 @@ function giveWeapon(model)
 end
 
 function repairCar(vehicle) 
-    FixCar(vehicle)
+    FixCar(vehicle);
 end
 
 local function network_control(netID)
@@ -157,7 +164,7 @@ function flipCar(vehicle)
         local getActualSpeed = GetCarSpeed(vehicle);
         SetVehicleQuaternion(vehicle, 0,0,0,0);
         SetCarHeading(vehicle, carHeading);
-        SetCarForwardSpeed(vehicle, getActualSpeed); --?
+        SetCarForwardSpeed(vehicle, getActualSpeed);
     end
 end
 
@@ -196,32 +203,3 @@ function teleportToWaypoint()
         Citizen.Trace("Waypoint not found!\n")
     end
 end
-
-
-
-
-
-
-
-
- 
--- void xmc_airstrike(void)
--- {
---     if(DOES_BLIP_EXIST(GET_FIRST_BLIP_INFO_ID(BLIP_WAYPOINT))){
---     Vector3 pos;
---     float z;
---     GET_BLIP_COORDS(GET_FIRST_BLIP_INFO_ID(BLIP_WAYPOINT),&pos);
---     GET_GROUND_Z_FOR_3D_COORD(pos.x,pos.y,pos.z,&z);
---     xmccreate_big_explosion(pos.x,pos.y,z);//adding 10.0f isn't tested
---     xmcPrint("Launching Airstrike!");
---     }
---     else xmcPrint("You need to set a waypoint!");
--- }
- 
- 
- 
--- Print Definition
- 
--- #define xmcPrint(x) PRINT_STRING_WITH_LITERAL_STRING("string",x,2500,true)
-
--- */

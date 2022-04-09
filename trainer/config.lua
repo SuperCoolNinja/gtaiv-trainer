@@ -16,8 +16,14 @@ config.vehicle = {
     isGodMode = false,
 }
 
+config.playersList = {} --> This will contain the online users.
+config.serverID = -1
+config.userName = ""
+
+
 config.menu = { 
     mainSub = { --> main menu :
+        {label = "Playerlist",        id = "playerlist"},
         {label = "Self options",      id = "self"},
         {label = "Spawn vehicle",     id = "spawn_cars"},
         {label = "Vehicle options",   id = "option_cars"},
@@ -27,8 +33,12 @@ config.menu = {
         {label = "Credits",           id = "credits"},
     },
 
+    playerListOptions = { --> online player list options :
+        {label = "TP to player"},
+    },  
+
     selfSub = { --> self submenu :
-        {label = "Change character",   id = "change_character"}
+        {label = "Change character",  id = "change_character"}
     },
 
     selfOptions = { --> self options :

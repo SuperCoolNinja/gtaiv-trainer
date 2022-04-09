@@ -1,5 +1,4 @@
 local optiTimerCar = 1000;
-local optiTimerPlayer = 1000;
 
 Citizen.CreateThread(function()
     while true do
@@ -9,52 +8,46 @@ Citizen.CreateThread(function()
         config.player.getActualCar = GetCarCharIsUsing(config.localPlayer);
 
         -- Open / close the menu :
-        if IsGameKeyboardKeyJustPressed(50) or IsButtonJustPressed(0, 13) then -- M / Back
+        if IsGameKeyboardKeyJustPressed(50) or IsButtonJustPressed(0, 13) then --> M / Back
 
             Menu.isOpen = not Menu.isOpen
+
             if Menu.isOpen then
-                PlaySoundFrontend(-1, "FRONTEND_MENU_TOGGLE_ON")
+                local users = GetPlayers(); --> Get all users connected.
+
+                for k in pairs(config.playersList) do --> Clear users.
+                    config.playersList[k] = nil
+                end
+
+                for _, i in ipairs(users) do --> Add users information into the new object key value.
+                    table.insert(config.playersList, {name = GetPlayerName(i), serverID = GetPlayerServerId(i)})
+                end
+
+                PlaySoundFrontend(-1, "FRONTEND_MENU_TOGGLE_ON");
             else
-                SetPlayerControl(GetPlayerId(), true)
-                PlaySoundFrontend(-1, "FRONTEND_MENU_TOGGLE_OFF")
+                SetPlayerControl(GetPlayerId(), true);
+                PlaySoundFrontend(-1, "FRONTEND_MENU_TOGGLE_OFF");
             end
         end
 
-        -- load features :
-        if Menu.isOpen then
-            Menu.Update()
-            MainMenu()
-            CarsMenu()
+        if Menu.isOpen then --> load features.
+            Menu.Update();
+            MainMenu();
+            CarsMenu();
         end
 
-        if ((config.player.isGodMode) or (config.player.isNeverWantedOn) or (config.player.isNoClipOn)) then 
-            optiTimerPlayer = 0;
+        if (config.player.isNeverWantedOn) then --> Disable cops when needed. 
+            disableCops();
         end
 
-        if (config.player.isNeverWantedOn) then
-            AlterWantedLevel(GetPlayerId(), 0);
-            AlterWantedLevelNoDrop(GetPlayerId(), 0);
-        end
-
-        if (config.player.isNoClipOn) then 
-            --Enable noclip mode : 
-            NoClip();
-
-            --Disable hud : 
-            DisplayHud(false)
-            DisplayRadar(false)
-            DisplayAmmo(false)
-            DisplayCash(false)
+        if (config.player.isNoClipOn) then --> Action when no clip is enabled or disabled.
+            NoClip(); --> Enable noclip mode.
+            showHUD(false); --> Disable hud.
         else
-            --Enable hud : 
-            DisplayHud(true)
-            DisplayRadar(true)
-            DisplayAmmo(true)
-            DisplayCash(true)
+            showHUD(true);  --> Enable hud.
         end
 
-        --Set the player into godmode : 
-        SetCharInvincible(config.localPlayer, config.player.isGodMode)
+        SetCharInvincible(config.localPlayer, config.player.isGodMode); --> Set the player into godmode.
     end
 end)
 
@@ -70,8 +63,8 @@ Citizen.CreateThread(function()
             optiTimerCar = 0;
 
             if (config.vehicle.isGodMode) then
-                SetCarCanBeVisiblyDamaged(config.player.getActualCar, false)
-                SetCarCanBeDamaged(config.player.getActualCar, false)
+                SetCarCanBeVisiblyDamaged(config.player.getActualCar, false);
+                SetCarCanBeDamaged(config.player.getActualCar, false);
             end
         
             if (config.vehicle.isBoostOn) then  --> If boost mode is enanled then we allow action to make a boost using car.
