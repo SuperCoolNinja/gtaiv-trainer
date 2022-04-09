@@ -26,9 +26,7 @@ end
 
 
 function NoClip()
-    local localPlayerPed = GetPlayerChar(GetPlayerId());
-    local localPlayerVehicle = GetCarCharIsUsing(localPlayerPed);
-    local x, y, z = GetCharCoordinates(localPlayerPed);
+    local x, y, z = GetCharCoordinates(config.localPlayer);
     local leftStickUpDown = GetControlValue(0, 14);
     local camera = GetGameCam();
     local _, _, yaw = GetCamRot(camera);
@@ -40,30 +38,30 @@ function NoClip()
     end
 
     if IsGameKeyboardKeyPressed(17) or leftStickUpDown <= 55 then --> Forward
-        local heading = GetCharHeading(localPlayerPed);
+        local heading = GetCharHeading(config.localPlayer);
         x = x + config.player.noClipSpeed * math.sin(Utils.DegreesToRadians(heading)) * -1.0
         y = y + config.player.noClipSpeed * math.cos(Utils.DegreesToRadians(heading))
     elseif IsGameKeyboardKeyPressed(31) or leftStickUpDown >= 200 then --> Backward
-        local heading = GetCharHeading(localPlayerPed);
+        local heading = GetCharHeading(config.localPlayer);
         x = x - config.player.noClipSpeed * math.sin(Utils.DegreesToRadians(heading)) * -1.0
         y = y - config.player.noClipSpeed * math.cos(Utils.DegreesToRadians(heading))
     end
 
-    if localPlayerVehicle == 0 then
-        SetCharHeading(localPlayerPed, yaw);
-        SetCharCoordinatesNoOffset(localPlayerPed, x, y, z);
-        SetCharCollision(localPlayerPed, not config.player.noClipSpeed);
-        SetCharVisible(localPlayerPed, false);
+    if config.player.getActualCar == 0 then
+        SetCharHeading(config.localPlayer, yaw);
+        SetCharCoordinatesNoOffset(config.localPlayer, x, y, z);
+        SetCharCollision(config.localPlayer, not config.player.noClipSpeed);
+        SetCharVisible(config.localPlayer, false);
     else
-        SetCarHeading(localPlayerVehicle, yaw);
-        SetCarCoordinatesNoOffset(localPlayerVehicle, x, y, z);
-        SetCarCollision(localPlayerVehicle, not config.player.noClipSpeed);
+        SetCarHeading(config.player.getActualCar, yaw);
+        SetCarCoordinatesNoOffset(config.player.getActualCar, x, y, z);
+        SetCarCollision(config.player.getActualCar, not config.player.noClipSpeed);
     end
 end
 
 function spawnCar(model)
     Citizen.CreateThread(function()
-		local pos = table.pack(GetCharCoordinates(GetPlayerChar(-1)))
+		local pos = table.pack(GetCharCoordinates(config.localPlayer))
 
 		RequestModel(model)
 
@@ -76,7 +74,7 @@ function spawnCar(model)
         SetCarOnGroundProperly(car)
         SetVehicleDirtLevel(car, 0.0)
         WashVehicleTextures(car, 255)
-		WarpCharIntoCar(GetPlayerChar(-1), car)
+		WarpCharIntoCar(config.localPlayer, car)
         MarkModelAsNoLongerNeeded(model)
         MarkCarAsNoLongerNeeded(car)
     end)
@@ -88,6 +86,7 @@ local function spawnLight(modelNeon, x,y,z,rx,ry,rz)
     SetObjectVisible(modelNeon, true);
     SetObjectInvincible(modelNeon, true);
     MarkObjectAsNoLongerNeeded(modelNeon);
+    SetObjectAlpha(modelNeon, 0);
 end
 
 function spawnNeon(model)
@@ -131,7 +130,7 @@ function spawnNeon(model)
 end
 
 function giveWeapon(model)
-	GiveWeaponToChar(GetPlayerChar(-1), model, 999);
+	GiveWeaponToChar(config.localPlayer, model, 999);
 end
 
 function repairCar(vehicle) 
@@ -188,7 +187,7 @@ function teleportToWaypoint()
             local pGroundZ, integer = GetGroundZFor3dCoord(waypoint.x, waypoint.y, height + 0.0);
 
             if pGroundZ > 0.0 then 
-                SetCharCoordinates(GetPlayerChar(-1), waypoint.x, waypoint.y, height + 0.0);
+                SetCharCoordinates(config.localPlayer, waypoint.x, waypoint.y, height + 0.0);
                 SetCharHeading(0.0); 
                 break
             end

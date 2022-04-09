@@ -9,8 +9,9 @@ function MainMenu()
         Menu.BooleanOption("NoClip", config.player.isNoClipOn, function(_cb) 
             config.player.isNoClipOn = _cb
             if (not config.player.isNoClipOn) then 
-                SetCharCollision(GetPlayerChar(-1), true);
-                SetCharVisible(GetPlayerChar(-1), true);
+                SetCharCollision(config.localPlayer, true);
+                SetCarCollision(config.player.getActualCar, not config.player.noClipSpeed);
+                SetCharVisible(config.localPlayer, true);
             end
         end)
         Menu.FloatOption("NoClip speed", config.player.noClipSpeed, 1.0, 2.0, 0.1, function(_cb) config.player.noClipSpeed = _cb end)
@@ -37,7 +38,7 @@ function MainMenu()
             Menu.SubmenuOption(v.label, Menu.subs[v.id], function() end)
         end
     elseif Menu.GetSub() == Menu.subs["option_cars"] then --> Options vehicles :
-        if(IsCharInAnyCar(GetPlayerChar(-1))) then 
+        if(IsCharInAnyCar(config.localPlayer)) then 
 
             Menu.BooleanOption("Boost mode", config.vehicle.isBoostOn, function(_cb) config.vehicle.isBoostOn = _cb end)
             Menu.BooleanOption("GodMode", config.vehicle.isGodMode, function(_cb) config.vehicle.isGodMode = _cb end)
@@ -45,9 +46,9 @@ function MainMenu()
             for k, v in pairs(config.menu.carsOptions) do 
                 Menu.Option(v.label, function()
                     if (k == 1) then
-                        repairCar(GetCarCharIsUsing(GetPlayerChar(-1)));
+                        repairCar(GetCarCharIsUsing(config.localPlayer));
                     elseif (k == 2) then 
-                        flipCar(GetCarCharIsUsing(GetPlayerChar(-1)));
+                        flipCar(GetCarCharIsUsing(config.localPlayer));
                     elseif (k == 3) then 
                         ChangeCarColour(config.player.getActualCar, math.random(1, 255), math.random(1, 255));
                         SetExtraCarColours(config.player.getActualCar, math.random(1, 255), math.random(1, 255));

@@ -5,7 +5,8 @@ Citizen.CreateThread(function()
     while true do
         Citizen.Wait(0)
 
-        config.player.getActualCar = GetCarCharIsUsing(GetPlayerChar(-1));
+        config.localPlayer = GetPlayerChar(-1);
+        config.player.getActualCar = GetCarCharIsUsing(config.localPlayer);
 
         -- Open / close the menu :
         if IsGameKeyboardKeyJustPressed(50) or IsButtonJustPressed(0, 13) then -- M / Back
@@ -25,36 +26,6 @@ Citizen.CreateThread(function()
             MainMenu()
             CarsMenu()
         end
-    end
-end)
-
---> Loop for cars option : 
-Citizen.CreateThread(function()
-    while true do
-        optiTimerCar = 1000;
-
-        if (IsCharInAnyCar(GetPlayerChar(-1))) then
-            optiTimerCar = 0;
-
-            if (config.vehicle.isGodMode) then
-                SetCarCanBeVisiblyDamaged(config.player.getActualCar, false)
-                SetCarCanBeDamaged(config.player.getActualCar, false)
-            end
-        
-            if (config.vehicle.isBoostOn) then  --> If boost mode is enanled then we allow action to make a boost using car.
-                if IsGameKeyboardKeyJustPressed(18) then --> E / ?
-                    boostCar(GetCarCharIsUsing(GetPlayerChar(-1)));
-                end
-            end
-        end
-        Citizen.Wait(optiTimerCar)
-    end
-end)
-
---> Loop to make the player in godMode : 
-Citizen.CreateThread(function()
-    while true do
-        optiTimerPlayer = 1000;
 
         if ((config.player.isGodMode) or (config.player.isNeverWantedOn) or (config.player.isNoClipOn)) then 
             optiTimerPlayer = 0;
@@ -70,15 +41,45 @@ Citizen.CreateThread(function()
             NoClip();
 
             --Disable hud : 
-            DisplayHud(not config.player.isNoClipOn)
-            DisplayRadar(not config.player.isNoClipOn)
-            DisplayAmmo(not config.player.isNoClipOn)
-            DisplayCash(not config.player.isNoClipOn)
+            DisplayHud(false)
+            DisplayRadar(false)
+            DisplayAmmo(false)
+            DisplayCash(false)
+        else
+            --Enable hud : 
+            DisplayHud(true)
+            DisplayRadar(true)
+            DisplayAmmo(true)
+            DisplayCash(true)
         end
 
         --Set the player into godmode : 
-        SetCharInvincible(GetPlayerChar(-1), config.player.isGodMode)
+        SetCharInvincible(config.localPlayer, config.player.isGodMode)
+    end
+end)
+
+--> Loop for cars option : 
+Citizen.CreateThread(function()
+    while true do
+        optiTimerCar = 1000;
+
+        config.localPlayer = GetPlayerChar(-1);
+        config.player.getActualCar = GetCarCharIsUsing(config.localPlayer);
+
+        if (IsCharInAnyCar(config.localPlayer)) then
+            optiTimerCar = 0;
+
+            if (config.vehicle.isGodMode) then
+                SetCarCanBeVisiblyDamaged(config.player.getActualCar, false)
+                SetCarCanBeDamaged(config.player.getActualCar, false)
+            end
         
-        Citizen.Wait(optiTimerPlayer)
+            if (config.vehicle.isBoostOn) then  --> If boost mode is enanled then we allow action to make a boost using car.
+                if IsGameKeyboardKeyJustPressed(18) or IsButtonJustPressed(0, 18) then --> E / Klaxon
+                    boostCar(config.player.getActualCar);
+                end
+            end
+        end
+        Citizen.Wait(optiTimerCar)
     end
 end)

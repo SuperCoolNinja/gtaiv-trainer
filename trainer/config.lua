@@ -1,6 +1,8 @@
 config = {};
 config.enableControl = true; --> Can control gameplay while the menu is open.
 
+config.localPlayer = 0
+
 config.player = {
     isGodMode = false,
     getActualCar = nil,
