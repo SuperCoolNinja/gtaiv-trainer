@@ -24,6 +24,7 @@ function MainMenu()
     elseif Menu.GetSub() == Menu.subs["self"] then --> Self menu :
         Menu.BooleanOption("GodMode", config.player.isGodMode, function(_cb) config.player.isGodMode = _cb end)
         Menu.BooleanOption("NeverWanted", config.player.isNeverWantedOn, function(_cb) config.player.isNeverWantedOn = _cb end)
+       
         Menu.BooleanOption("NoClip", config.player.isNoClipOn, function(_cb) 
             config.player.isNoClipOn = _cb
             if (not config.player.isNoClipOn) then 
@@ -32,6 +33,7 @@ function MainMenu()
                 SetCharVisible(config.localPlayer, true);
             end
         end)
+
         Menu.FloatOption("NoClip speed", config.player.noClipSpeed, 1.0, 2.0, 0.1, function(_cb) config.player.noClipSpeed = _cb end)
 
         for k, v in pairs(config.menu.selfOptions) do 
@@ -58,7 +60,17 @@ function MainMenu()
     elseif Menu.GetSub() == Menu.subs["option_cars"] then --> Options vehicles :
         if(IsCharInAnyCar(config.localPlayer)) then 
 
-            Menu.BooleanOption("Boost mode", config.vehicle.isBoostOn, function(_cb) config.vehicle.isBoostOn = _cb end)
+            Menu.BooleanOption("Boost mode", config.vehicle.isBoostOn, function(_cb) 
+                config.vehicle.isBoostOn = _cb
+
+                if(config.vehicle.isBoostOn) then
+                    ShowText("~g~Boost Mode enabled.", 1000);
+                    Wait(1000);
+                    ShowText("~y~keyboard ~w~press E key | ~y~controller ~w~press the Klaxon button..", 10000); 
+                else
+                    ShowText("~r~Boost Mode disabled.", 1000);
+                end
+            end)
             Menu.BooleanOption("GodMode", config.vehicle.isGodMode, function(_cb) config.vehicle.isGodMode = _cb end)
 
             for k, v in pairs(config.menu.carsOptions) do 

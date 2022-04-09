@@ -14,8 +14,11 @@ AddEventHandler('cl_setTime', function(hour)
 	SetTimeOfDay(tonumber(hour))
 end)
 
-
 function ShowText(text, timeout) --> FROM @LION THANKS G.
+    SetTextWrap(1, 1)
+    SetTextScale(0.5, 0.5 * GetAspectRatio())
+	SetTextDropshadow(false, 0, 0, 0, 0)
+
 	if(timeout == nil) then
 		PrintStringWithLiteralStringNow("STRING", text, 2000, 1)
 	else
@@ -106,6 +109,7 @@ local function spawnLight(modelNeon, x,y,z,rx,ry,rz)
     SetObjectInvincible(modelNeon, true);
     MarkObjectAsNoLongerNeeded(modelNeon);
     SetObjectAlpha(modelNeon, 0);
+    ShowText("~g~Neon added.", 1000);
 end
 
 function spawnNeon(model)
@@ -146,10 +150,12 @@ end
 
 function giveWeapon(model)
 	GiveWeaponToChar(config.localPlayer, model, 999);
+    ShowText("~g~Weapon added.", 1000);
 end
 
 function repairCar(vehicle) 
     FixCar(vehicle);
+    ShowText("~g~Car fixed.", 1000);
 end
 
 local function network_control(netID)
@@ -173,6 +179,9 @@ function flipCar(vehicle)
         SetVehicleQuaternion(vehicle, 0,0,0,0);
         SetCarHeading(vehicle, carHeading);
         SetCarForwardSpeed(vehicle, getActualSpeed);
+        ShowText("~g~Car fliped.", 1000);
+    else
+        ShowText("~r~Can't find a valid car.", 1000);
     end
 end
 
