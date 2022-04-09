@@ -15,7 +15,7 @@ else do not hesitate to contribute. feel free to use it as your need just make s
 ## Main Menu : 
 ![menu](https://cdn.discordapp.com/attachments/926825487815278622/962431914185228339/unknown.png)
 
-@Copyright goes for 
+Copyright goes for 
 - @GTA-Lion (For having taking back CitizenMP:IV and making it work like a charm.)
 - @K3rhos (base menu)
 - @SuperCoolNinja (features)
