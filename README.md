@@ -1,7 +1,7 @@
-#gtaiv-trainer
+# gtaiv-trainer
 These features were added first for me, while I was experimenting, and then to provide the community with some examples of native usage.
 
-only for CitizenIV.
+ONLY FOR CitizenIV:Reloaded.
 
 
 ## How to open the menu ? 
